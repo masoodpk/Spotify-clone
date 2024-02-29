@@ -4,7 +4,7 @@ import Footer from './Components/Footer/Footer'
 import { BrowserRouter, Routes, Route, Link, Router } from 'react-router-dom'
 import './App.css'
 import axios from 'axios'
-
+import Register from './pages/register'
 
 function App() {
   axios.defaults.baseURL=location.href;
@@ -14,8 +14,23 @@ function App() {
  
   return (
     <div >
-        <Index/>
-       
+
+        {
+<BrowserRouter>
+<Routes>
+
+<Route path="/" Component={Index} />
+<Route path="/register" Component={Register} />
+{/* <Route path="/login" Component={Login} /> */}
+
+
+
+
+</Routes>
+</BrowserRouter>
+
+
+   }
      </div>
   )
 }

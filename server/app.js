@@ -2,7 +2,7 @@ import express from "express";
 import conn from "./connection.js"
 import router from "./router.js";
 import dotenv from "dotenv";
-
+import cors from "cors";
 
 const app=express();
 app.use(cors())

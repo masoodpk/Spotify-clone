@@ -10,8 +10,8 @@ function Index() {
     <Sidebar/>
      <Hero/>
     </div>
-      {/* <Footer/>
-     */}
+      {/* <Footer/> */}
+    
    
       
     
