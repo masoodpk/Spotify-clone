@@ -1,7 +1,9 @@
 import React from 'react'
 import Index from './Index'
 import Footer from './Components/Footer/Footer'
-
+import { BrowserRouter, Routes, Route, Link, Router } from 'react-router-dom'
+import './App.css'
+import axios from 'axios'
 
 
 function App() {

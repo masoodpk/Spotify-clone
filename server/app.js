@@ -1,11 +1,19 @@
 import express from "express";
-
+import conn from "./connection.js"
+import router from "./router.js";
+import dotenv from "dotenv";
 import conn from "./connection.js"
 
-
 const app=express();
+app.use(cors())
+app.use(express.json({
+    limit:"10mb"
+}))
+app.use("/api",router)
 
+app.use(express.static("./dist"))
 
+dotenv.config();
 
 
 
