@@ -1,6 +1,6 @@
 import express from "express";
 
-
+import conn from "./connection.js"
 
 
 const app=express();
