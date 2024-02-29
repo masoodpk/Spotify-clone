@@ -22,7 +22,7 @@ const uploader = multer({ storage });
 const router = Router()
 
 router.route("/register").post(uploader.single("file"),rh.register);
-// router.route("/login").post(rh.login);
-
+router.route("/login").post(rh.login);
+router.route("/image/:name").get(rh.image);
 
 export default router;

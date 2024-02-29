@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Link, Router } from 'react-router-dom'
 import './App.css'
 import axios from 'axios'
 import Register from './pages/register'
-
+import Login from './pages/login';
 function App() {
   axios.defaults.baseURL=location.href;
   if(import.meta.env.DEV){
@@ -21,7 +21,7 @@ function App() {
 
 <Route path="/" Component={Index} />
 <Route path="/register" Component={Register} />
-{/* <Route path="/login" Component={Login} /> */}
+<Route path="/login" Component={Login} />
 
 
 

@@ -41,7 +41,7 @@ function Register() {
                 });
                 if (res.status === 201) {
                     toast.success(res.data.msg);
-                    navigate("/login", { replace: true });
+                    navigate("/", { replace: true });
                 }
             }
             catch (error) {
@@ -55,30 +55,30 @@ function Register() {
     return (
         <>
             <Toaster />
-            <div className='container'>
+            <div className='container one'>
                 <div className='row'>
                     <div className='col-md-6 offset-md-3'>
-                        <div className='signup-box'>
+                        <div className='signup-box three'>
                             <h2 className='text-center three'>Sign up to start <br />listening</h2>
-                            <form className='formBox' onSubmit={formik.handleSubmit} >
+                            <form className='formBox four' onSubmit={formik.handleSubmit} >
                                 <div className="form-group">
-                                    <input {...formik.getFieldProps("username")} type="text" className="form-control" name="username" id="username" placeholder="Username" />
+                                    <input {...formik.getFieldProps("username")} type="text" className="form-control five" name="username" id="username" placeholder="Username" />
                                     {formik.errors.username ? <div className="error">{formik.errors.username}</div> : null}
                                 </div>
                                 <div className="form-group">
-                                    <input {...formik.getFieldProps("email")} type="email" className="form-control" name="email" id="email" placeholder="Email address" />
+                                    <input {...formik.getFieldProps("email")} type="email" className="form-control five" name="email" id="email" placeholder="Email address" />
                                     {formik.errors.email ? <div className="error">{formik.errors.email}</div> : null}
                                 </div>
                                 <div className="form-group">
-                                    <input {...formik.getFieldProps("password")} type="password" className="form-control" id="password" placeholder="Password" />
+                                    <input {...formik.getFieldProps("password")} type="password" className="form-control five" id="password" placeholder="Password" />
                                     {formik.errors.password ? <div className="error">{formik.errors.password}</div> : null}
                                 </div>
                                 <div className="form-group">
-                                    <input {...formik.getFieldProps("confirmPassword")} type="password" className="form-control" id="confirmPassword" placeholder="Confirm Password" />
+                                    <input {...formik.getFieldProps("confirmPassword")} type="password" className="form-control five" id="confirmPassword" placeholder="Confirm Password" />
                                     {formik.errors.confirmPassword ? <div className="error">{formik.errors.confirmPassword}</div> : null}
                                 </div>
          <input type="file"  name="file" id="file" placeholder="file"/>
-                                <input type="submit" className="btn btn-primary btn-block" value="Sign Up" />
+                                <input type="submit" className="btn btn-primary two btn-block" value="Sign Up" />
                             </form>
                             <p className="mt-3 text-center">Already have an account? <Link className="link" to={"/login"}>Log In</Link></p>
                         </div>
@@ -86,7 +86,7 @@ function Register() {
                 </div>
             </div>
 
-            <img src={Spotify} alt="Logo" className="logo" />
+            <img src={Spotify} alt="Logo" className="logos" />
         </>
     )
 }

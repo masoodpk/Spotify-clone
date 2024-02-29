@@ -1,0 +1,87 @@
+body {
+    /* background-color: #1a1a1a; */
+    color: #fff; 
+    
+}
+
+.signup-box-login {
+    background-color: #111111;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    height: 480px;
+    margin-top: 42%;
+
+}
+
+
+.error {
+    color: #ff3333;
+    font-size: 0.8rem;
+}
+
+.link {
+    color: #fff;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+.container-fluid {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.formBox-login {
+    width: 100%;
+    max-width: 400px;
+}
+
+.formBox-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+.btn-primary.bttn {
+    background-color:#1ed760;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    width: 320px;
+    font-weight: bold;
+}
+.form-control.login {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 300px;
+ 
+}
+
+.logoo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 140px; /* Adjust size as needed */
+    height: 50px; /* Adjust size as needed */
+}
+.loginone{
+    text-align: center ;
+font-size: 50px;
+font-family: var(--font-family, CircularSpTitle, CircularSpTitle-Tall, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif));;
+}
+.logintwo{
+    margin-left: 38px;
+
+}
