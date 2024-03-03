@@ -7,15 +7,15 @@
   .card {
     position: relative;
     margin: 10px;
-    width: 200px;
+    width: 180px;
     background-color: #fff;
-    border-radius: 8px;
+    border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
   }
   
   .card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-3px);
   }
   
   .card img {
@@ -31,7 +31,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(112, 111, 111, 0.514);
     padding: 10px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -47,15 +47,16 @@
   }
   
   .card p {
-    font-size: 14px;
-    color: #777;
+    font-size: 16px;
+    color: #000000;
+   
   }
   
   .play-button {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(25, 124, 6, 0.637);
     color: #fff;
     padding: 8px;
     border-radius: 50%;
@@ -64,6 +65,20 @@
   }
   
   .play-button:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgb(44, 155, 0);
   }
-  
+  .card-content {
+    text-align: center; /* Align content center */
+}
+
+.title {
+    font-size: 18px; 
+    font-weight: bold; 
+    margin-bottom: 5px;
+}
+
+.category {
+    font-size: 14px; 
+    color: #888; 
+    font-weight: bold;
+}

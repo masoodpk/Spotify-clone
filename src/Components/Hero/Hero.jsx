@@ -5,9 +5,60 @@ import { FaInstagram } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaRegCopyright } from "react-icons/fa";
-
+// import Getsongs from '../../pages/getsongs';
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from 'react'
+import axios from 'axios'
+import './hero.css'
 function Hero() {
+  let baseURL = location.href;
+  if (import.meta.env.DEV) {
+      baseURL = "http://localhost:3007"
+  }
+  const [data, setData] = useState([]);
+  const [audioStates, setAudioStates] = useState({});
+  const audioRefs = useRef([]);
+  useEffect(() => {
+   
+      axios.get("/api/hero", {
+          headers: {
+              "Content-Type": "multipart/form-data",
+ 
+
+          }
+      })
+
+          .then(res => {
+              console.log(res.data);
+              setData(res.data.user)
+              setAudioStates(new Array(res.data.user.length).fill(false));
+              audioRefs.current = new Array(res.data.user.length).fill(null).map(() => React.createRef());
+              console.log(res.data.user);
+          })
+          .catch(console.log);
+  }, []);
+
+  const playAudio = (audioUrl, index) => {
+      const audioRef = audioRefs.current[index].current;
+      if (!audioRef) return;
+
+      const isPlaying = !audioRef.paused;
+
+      if (isPlaying) {
+          audioRef.pause();
+      } else {
+          audioRef.play();
+      }
+
+      const newAudioStates = [...audioStates];
+      newAudioStates[index] = !isPlaying;
+      setAudioStates(newAudioStates);
+  };
+
+
+
+
+
 
   return (
 
@@ -22,12 +73,54 @@ function Hero() {
               <p className='text-gray-400 font-bold hover:underline duration-100 cursor-pointer mt-[10px]'>Show all</p>
             </div>
             <div className="hero-card-section flex flex-wrap ">
+              {/* <Card/>
               <Card/>
               <Card/>
               <Card/>
-              <Card/>
-              <Card/>
+              <Card/> */}
               
+
+
+
+
+                  <div>
+          <div className="card-container">
+            {data.map((item, index) => (
+              <div className="card two" key={index}>
+                <div className="card-content">
+                <h4 className="title">{item.title}</h4>
+               <p className="category">{item.category}</p>
+                </div>
+                <img src={`${baseURL}/api/image/${item.profile}`} width={"200"} />
+     
+
+                <div className="play-button" onClick={() => playAudio(item.audio, index)}>
+                                {audioStates[index] ? "❚❚" : "▶"}
+                            </div>
+                            <audio ref={audioRefs.current[index]} src={`${baseURL}/api/image/${item.audio}`} />
+              </div>
+
+
+
+
+            ))}
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
             </div>
           <div className="hero-list-socialMeadia mt-[50px] xl:mt-[100px] flex justify-between ">

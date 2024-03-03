@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { useState, useEffect } from 'react'
-
+import { useState, useEffect, useRef } from 'react'
+import React from 'react';
 import './getsongs.css'
 
 
@@ -10,7 +10,8 @@ function Getsongs() {
         baseURL = "http://localhost:3007"
     }
     const [data, setData] = useState([]);
-
+    const [audioStates, setAudioStates] = useState({});
+    const audioRefs = useRef([]);
     useEffect(() => {
         let token = localStorage.getItem("token")
         axios.get("/api/getsongs", {
@@ -24,20 +25,29 @@ function Getsongs() {
             .then(res => {
                 console.log(res.data);
                 setData(res.data.user)
-              
+                setAudioStates(new Array(res.data.user.length).fill(false));
+                audioRefs.current = new Array(res.data.user.length).fill(null).map(() => React.createRef());
                 console.log(res.data.user);
             })
             .catch(console.log);
     }, []);
 
-    const playAudio = (audioUrl) => {
-        const audio = new Audio(`${baseURL}/api/image/${audioUrl}`);
-        audio.play();
-      };
-    
-      console.log("data", data)
-    
-    
+    const playAudio = (audioUrl, index) => {
+        const audioRef = audioRefs.current[index].current;
+        if (!audioRef) return;
+
+        const isPlaying = !audioRef.paused;
+
+        if (isPlaying) {
+            audioRef.pause();
+        } else {
+            audioRef.play();
+        }
+
+        const newAudioStates = [...audioStates];
+        newAudioStates[index] = !isPlaying;
+        setAudioStates(newAudioStates);
+    };
 
     return (
         <>
@@ -46,12 +56,21 @@ function Getsongs() {
             {data.map((item, index) => (
               <div className="card two" key={index}>
                 <div className="card-content">
-                  <h4>{item.title}</h4>
-                  <p>{item.category}</p>
+                <h4 className="title">{item.title}</h4>
+               <p className="category">{item.category}</p>
                 </div>
                 <img src={`${baseURL}/api/image/${item.profile}`} width={"200"} />
-                <div className="play-button" onClick={() => playAudio(item.audio)}>▶</div>
+     
+
+                <div className="play-button" onClick={() => playAudio(item.audio, index)}>
+                                {audioStates[index] ? "❚❚" : "▶"}
+                            </div>
+                            <audio ref={audioRefs.current[index]} src={`${baseURL}/api/image/${item.audio}`} />
               </div>
+
+
+
+
             ))}
           </div>
         </div>

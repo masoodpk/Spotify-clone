@@ -43,8 +43,8 @@ function Header(){
 
         {isLoggedIn ? (
           <>
-            <Link to="/getsongs" className='mx-5 text-[16px] text-gray-400 font-semibold hover:text-white hover:scale-105 duration-200'>get songs</Link>
-          <Link to="/addsongs" className='mx-5 text-[16px] text-gray-400 font-semibold hover:text-white hover:scale-105 duration-200'>Add Songs</Link>
+            {/* <Link to="/getsongs" className='mx-5 text-[16px] text-gray-400 font-semibold hover:text-white hover:scale-105 duration-200'>get songs</Link> */}
+          {/* <Link to="/addsongs" className='mx-5 text-[16px] text-gray-400 font-semibold hover:text-white hover:scale-105 duration-200'>Add Songs</Link> */}
           <button  onClick={handleLogout} className='bg-white p-2 text-black rounded-full text-[16px] font-bold w-[100px] text-center hover:scale-105 duration-100'>Log out</button>
           </>
         ) : (

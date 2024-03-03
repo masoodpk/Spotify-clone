@@ -148,3 +148,24 @@ export async function register(req, res) {
     }
   };
   
+
+  
+  export async function hero(req, res) {
+    try {
+
+      const user = await addsongsModel.find();
+      console.log(user);
+      return res.status(200).json({
+        msg: "Files retrieved successfully",
+        user
+      });
+  
+      //  
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        msg: "Error occurred while retrieving files",
+      });
+    }
+  };
+  
