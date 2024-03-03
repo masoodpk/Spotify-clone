@@ -26,6 +26,9 @@ function Login() {
                 let res = await axios.post("/api/login", { ...values })
                 if (res.status === 201) {
                     toast.success(res.data.msg);
+            
+                    localStorage.setItem("token", res.data.token);
+               
                     navigate("/", { replace: true });
                 }
             }

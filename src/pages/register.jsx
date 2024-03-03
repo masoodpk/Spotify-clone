@@ -41,7 +41,7 @@ function Register() {
                 });
                 if (res.status === 201) {
                     toast.success(res.data.msg);
-                    navigate("/", { replace: true });
+                    navigate("/login", { replace: true });
                 }
             }
             catch (error) {

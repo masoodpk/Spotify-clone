@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 import loginModel from "./models/login.model.js";
+import addsongsModel from "./models/addsongs.model.js";
 
 import path from "path";
 const { sign } = jwt;
@@ -99,3 +100,51 @@ export async function register(req, res) {
       });
     }
   };
+
+  export async function addsongs(req, res) {
+    try {
+      let { userId } = req.user;
+      console.log(userId);
+      // let { filename } = req.file;
+
+      let {  title, category, } = req.body;
+  
+      // let profile = req.files && req.files.image ? req.files.image[0].filename : null;
+      // let audio = req.files && req.files.audio ? req.files.audio[0].filename : null;
+      const profile = req.files["image"][0].filename;
+      const audio = req.files["audio"][0].filename;
+  
+      let user = await addsongsModel.create({ profile, audio, title,  category, userId});
+      console.log(user);
+      return res.status(201).json({
+        msg: "data uploaded",
+        user,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        msg: "error occured",
+      });
+    }
+  }
+  
+  export async function getsongs(req, res) {
+    try {
+  
+   let {userId} = req.user
+      const user = await addsongsModel.find({ userId});
+      console.log(user);
+      return res.status(200).json({
+        msg: "Files retrieved successfully",
+        user
+      });
+  
+      //  
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        msg: "Error occurred while retrieving files",
+      });
+    }
+  };
+  

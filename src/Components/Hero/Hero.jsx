@@ -6,8 +6,13 @@ import { FaTwitter } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaRegCopyright } from "react-icons/fa";
 
+import { useNavigate } from "react-router-dom";
 function Hero() {
+
   return (
+
+
+    
     <div className='container bg-demo mt-[10px] mr-[10px] ml-[370px] h-[100vh]  rounded-md  '>
         <Header/>
         <div className="hero-section   bg-gradient-to-b bg-neutral-900 p-3 rounded-md">
@@ -23,7 +28,7 @@ function Hero() {
               <Card/>
               <Card/>
               
-              
+ 
             </div>
           <div className="hero-list-socialMeadia mt-[50px] xl:mt-[100px] flex justify-between ">
 

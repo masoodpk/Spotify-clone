@@ -6,6 +6,8 @@ import './App.css'
 import axios from 'axios'
 import Register from './pages/register'
 import Login from './pages/login';
+import Addsongs from './pages/addsongs'
+import Getsongs from './pages/getsongs'
 function App() {
   axios.defaults.baseURL=location.href;
   if(import.meta.env.DEV){
@@ -22,7 +24,8 @@ function App() {
 <Route path="/" Component={Index} />
 <Route path="/register" Component={Register} />
 <Route path="/login" Component={Login} />
-
+<Route path="/addsongs" Component={Addsongs} />
+<Route path="/getsongs" Component={Getsongs} />
 
 
 
