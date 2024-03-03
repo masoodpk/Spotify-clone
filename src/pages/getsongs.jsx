@@ -10,6 +10,7 @@ function Getsongs() {
         baseURL = "http://localhost:3007"
     }
     const [data, setData] = useState([]);
+
     useEffect(() => {
         let token = localStorage.getItem("token")
         axios.get("/api/getsongs", {
@@ -19,44 +20,43 @@ function Getsongs() {
 
             }
         })
+
             .then(res => {
                 console.log(res.data);
                 setData(res.data.user)
+              
                 console.log(res.data.user);
             })
             .catch(console.log);
     }, []);
 
+    const playAudio = (audioUrl) => {
+        const audio = new Audio(`${baseURL}/api/image/${audioUrl}`);
+        audio.play();
+      };
+    
+      console.log("data", data)
+    
+    
+
     return (
         <>
-            <div>
-    
-            <div className="card-container">
-                {data.map((item, index) => (
-
-                    <div className="card two" key={index}>
-
-                        <img src={`${baseURL}/api/image/${item.profile}`} width={"200"} />
-
-                        {/* <img src={`/api/image/${item.profile}`} alt={item.title} width={"200"} /> */}
-                        <audio controls>
-                        <source src={`${baseURL}/api/audio/${item.audio}`} type="audio/mp3" />
-                            Your browser does not support the audio element.
-                        </audio>
-
-                        <h4>{item.title}</h4>
-                      
-                        <p>{item.category}</p>
-                  
-                    </div>
-                ))}
-            </div>
-            </div>
-<br /><br /><br />
-
-
-
-        </>
+        <div>
+          <div className="card-container">
+            {data.map((item, index) => (
+              <div className="card two" key={index}>
+                <div className="card-content">
+                  <h4>{item.title}</h4>
+                  <p>{item.category}</p>
+                </div>
+                <img src={`${baseURL}/api/image/${item.profile}`} width={"200"} />
+                <div className="play-button" onClick={() => playAudio(item.audio)}>▶</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <br /><br /><br />
+      </>
     )
 }
 
