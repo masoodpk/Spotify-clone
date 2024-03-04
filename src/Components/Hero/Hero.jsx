@@ -1,9 +1,8 @@
 import React from 'react'
 import Header from './Header/Header'
 import Card from '../Card/Card'
-import { FaInstagram } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
-import { FaFacebook } from "react-icons/fa";
+import { FaInstagram, FaTwitter, FaFacebook } from "react-icons/fa";
+import { FaRegPlayCircle, FaRegPauseCircle } from "react-icons/fa";
 import { FaRegCopyright } from "react-icons/fa";
 // import Getsongs from '../../pages/getsongs';
 import { useNavigate } from "react-router-dom";
@@ -17,7 +16,10 @@ function Hero() {
   }
   const [data, setData] = useState([]);
   const [audioStates, setAudioStates] = useState({});
+  const [currentPlayingIndex, setCurrentPlayingIndex] = useState(null);
   const audioRefs = useRef([]);
+  const audioRef = useRef(null);
+
   useEffect(() => {
    
       axios.get("/api/hero", {
@@ -37,16 +39,22 @@ function Hero() {
           })
           .catch(console.log);
   }, []);
-
-
+  
   const playAudio = (audioUrl, index) => {
     const audioRef = audioRefs.current[index]?.current;
     if (!audioRef) return;
 
-    // Pause all other songs
+  
     audioRefs.current.forEach((ref, idx) => {
         if (idx !== index && ref && ref.current && !ref.current.paused) {
             ref.current.pause();
+
+
+            setAudioStates(prevStates => {
+              const newStates = [...prevStates];
+              newStates[idx] = false;
+              return newStates;
+            });
         }
     });
 
@@ -54,8 +62,23 @@ function Hero() {
 
     if (isPlaying) {
         audioRef.pause();
+
+
+        setAudioStates(prevStates => {
+          const newStates = [...prevStates];
+          newStates[index] = false;
+          return newStates;
+        });
+
     } else {
         audioRef.play();
+        setCurrentPlayingIndex(index);
+        setAudioStates(prevStates => {
+          const newStates = [...prevStates];
+          newStates[index] = true;
+          return newStates;
+        });
+  
     }
 
     const newAudioStates = new Array(audioStates.length).fill(false);
@@ -65,15 +88,17 @@ function Hero() {
 
 
 
-
   return (
-
-
     
     <div className='container bg-demo mt-[10px] mr-[10px] ml-[370px] h-[100vh]  rounded-md  '>
         <Header/>
         <div className="hero-section   bg-gradient-to-b bg-neutral-900 p-3 rounded-md">
 
+         {currentPlayingIndex !== null && (
+          <div className="audio-player" style={{ width: '100%',backgroundColor:'black', color: '#black', padding: '10px', position: 'fixed',left:0, bottom: 0, zIndex: 999 }}>
+            {/* <audio controls style={{ width: '100%' , color:'#333' }} src={`${baseURL}/api/image/${data[currentPlayingIndex].audio}`} ref={audioRef}/>  */}
+          </div>
+        )} 
             <div className="hero-top flex justify-between px-3  align-middle">
               <h1 className='font-bold text-[25px] hover:underline duration-100 cursor-pointer'>Spotify Playlist</h1>
               <p className='text-gray-400 font-bold hover:underline duration-100 cursor-pointer mt-[10px]'>Show all</p>
@@ -85,10 +110,6 @@ function Hero() {
               <Card/>
               <Card/> */}
               
-
-
-
-
                   <div>
           <div className="card-container">
             {data.map((item, index) => (
@@ -98,37 +119,20 @@ function Hero() {
                <p className="category">{item.category}</p>
                 </div>
                 <img src={`${baseURL}/api/image/${item.profile}`} width={"200"} />
-     
 
                 <div className="play-button" onClick={() => playAudio(item.audio, index)}>
                                 {audioStates[index] ? "❚❚" : "▶"}
-                            </div>
+                            </div> 
+
+
+
                             <audio ref={audioRefs.current[index]} src={`${baseURL}/api/image/${item.audio}`} />
               </div>
-
-
-
-
             ))}
           </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
             </div>
+
           <div className="hero-list-socialMeadia mt-[50px] xl:mt-[100px] flex justify-between ">
 
             <div className="hero-list flex  ml-[30px] text-gray-400">
@@ -167,6 +171,11 @@ function Hero() {
 
             </div>
           </div>
+          <div className="music-player">
+          <audio controls style={{ width: '100%' }} src={`${baseURL}/api/image/${data[currentPlayingIndex]?.audio}`} ref={audioRef} />
+        </div>
+
+       
 
          <div className="hero-botom mt-[30px] px-[50px]">
           <div className="content  border-t-2 border-neutral-800 flex text-neutral-500 ">
@@ -181,3 +190,9 @@ function Hero() {
 }
 
 export default Hero
+
+
+
+
+
+

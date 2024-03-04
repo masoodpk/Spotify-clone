@@ -11,6 +11,7 @@ import spIcon from '../../assets/Spotify.svg'
 function Sidebar() {
 
  const [scrolling ,setScrolling] = useState(false)
+
  useEffect(()=>{
   const handleScroll=()=>{
     if(window.screenY >50){
@@ -20,7 +21,11 @@ function Sidebar() {
     }
   }
   window.addEventListener('scroll',handleScroll)
+
  },[])
+
+
+
 
  const header =`flex p-3 justify-between ${scrolling && 'shadow-black shadow-md'}`
 
@@ -56,7 +61,10 @@ function Sidebar() {
 
             <div className="sidebar-midile h-[200px] overflow-y-scroll   p-3">
 
-              <div className="midle-tile-1 bg-bgclr h-[150px] rounded-lg mt-[10px] py-[15px] px-[20px]">
+
+
+
+              <div className="midle-tile-1  bg-bgclr h-[150px] rounded-lg mt-[10px] py-[15px] px-[20px]">
                   <h1 className='font-medium text-[18px]'>Create your first playlist</h1>
                   <p className='font-medium'>its easy,we will help you</p>
                   <button className='py-2 px-3 bg-white text-black rounded-3xl mt-[25px] font-bold hover:scale-105 duration-100 text-[14px]'>Create playlist</button>
