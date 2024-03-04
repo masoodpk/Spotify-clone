@@ -38,24 +38,30 @@ function Hero() {
           .catch(console.log);
   }, []);
 
+
   const playAudio = (audioUrl, index) => {
-      const audioRef = audioRefs.current[index].current;
-      if (!audioRef) return;
+    const audioRef = audioRefs.current[index]?.current;
+    if (!audioRef) return;
 
-      const isPlaying = !audioRef.paused;
+    // Pause all other songs
+    audioRefs.current.forEach((ref, idx) => {
+        if (idx !== index && ref && ref.current && !ref.current.paused) {
+            ref.current.pause();
+        }
+    });
 
-      if (isPlaying) {
-          audioRef.pause();
-      } else {
-          audioRef.play();
-      }
+    const isPlaying = !audioRef.paused;
 
-      const newAudioStates = [...audioStates];
-      newAudioStates[index] = !isPlaying;
-      setAudioStates(newAudioStates);
-  };
+    if (isPlaying) {
+        audioRef.pause();
+    } else {
+        audioRef.play();
+    }
 
-
+    const newAudioStates = new Array(audioStates.length).fill(false);
+    newAudioStates[index] = !isPlaying;
+    setAudioStates(newAudioStates);
+};
 
 
 
