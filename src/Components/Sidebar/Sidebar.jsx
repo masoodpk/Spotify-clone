@@ -8,10 +8,11 @@ import { PiGlobeSimpleBold } from "react-icons/pi";
 import { SlSocialSpotify } from "react-icons/sl";
 import { LuPlus } from "react-icons/lu";
 import spIcon from '../../assets/Spotify.svg'
-function Sidebar() {
+import { Link } from 'react-router-dom';
+function Sidebar({ onCreatePlaylist,  onHomeClick }) {
 
  const [scrolling ,setScrolling] = useState(false)
-
+ const [showPlaylistPage, setShowPlaylistPage] = useState(false);
  useEffect(()=>{
   const handleScroll=()=>{
     if(window.screenY >50){
@@ -25,6 +26,16 @@ function Sidebar() {
  },[])
 
 
+ const handleCreatePlaylist = () => {
+  setShowPlaylist(true);
+};
+
+const togglePlaylistPage = () => {
+  setShowPlaylistPage(!showPlaylistPage);
+};
+const handleHomeClick = () => {
+  onHomeClick(); // Call the function passed from the parent component
+};
 
 
  const header =`flex p-3 justify-between ${scrolling && 'shadow-black shadow-md'}`
@@ -36,7 +47,12 @@ function Sidebar() {
          <ul className='text-white flex flex-col '>
           
            <li className='flex font-bold '> <span className='mr-[2px] '><BsSpotify size={23}/></span>Spotify</li>
-            <li className='flex mt-[25px] font-bold '> <span className=' mr-[15px] mt-[-5px]'><GoHomeFill size={30}/></span>Home</li>
+            <li className='flex mt-[25px] font-bold ' onClick={handleHomeClick}> <span className=' mr-[15px] mt-[-5px]'><GoHomeFill size={30}/></span>Home</li>
+          
+
+
+
+
             <li className='flex mt-[25px] font-bold text-gray-400 hover:text-white duration-150 cursor-pointer'> <span className=' mr-[15px] mt-[-5px]'><CiSearch size={30}/></span>Search</li>
            
             
@@ -54,7 +70,7 @@ function Sidebar() {
               </div>
             
 
-              <div className="sidebar-header-right hover:bg-black duration-75 rounded-full p-1 cursor-pointer text-gray-400">
+              <div  className="sidebar-header-right hover:bg-black duration-75 rounded-full p-1 cursor-pointer text-gray-400">
                 <LuPlus size={25} />
               </div>
             </div>
@@ -67,7 +83,16 @@ function Sidebar() {
               <div className="midle-tile-1  bg-bgclr h-[150px] rounded-lg mt-[10px] py-[15px] px-[20px]">
                   <h1 className='font-medium text-[18px]'>Create your first playlist</h1>
                   <p className='font-medium'>its easy,we will help you</p>
-                  <button className='py-2 px-3 bg-white text-black rounded-3xl mt-[25px] font-bold hover:scale-105 duration-100 text-[14px]'>Create playlist</button>
+                  <button onClick={onCreatePlaylist}  className='py-2 px-3 bg-white text-black rounded-3xl mt-[25px] font-bold hover:scale-105 duration-100 text-[14px]'>Create playlist</button>
+{/*           
+             <Link to="/playlist">
+            <button className='py-2 px-3 bg-white text-black rounded-3xl mt-[25px] font-bold hover:scale-105 duration-100 text-[14px]'>
+              Create playlist
+            </button>
+          </Link> */}
+          
+          
+          
               </div>
               <div className="midle-tile-2 bg-bgclr h-[150px] rounded-xl mt-[20px] py-[15px] px-[20px]">
               <h1 className='font-medium text-[18px]'>Lets find some podcasts to follow</h1>

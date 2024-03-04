@@ -9,6 +9,7 @@ import Login from './pages/login';
 import Addsongs from './pages/addsongs'
 import Getsongs from './pages/getsongs'
 import Playlist from './Components/playlist'
+
 function App() {
   axios.defaults.baseURL=location.href;
   if(import.meta.env.DEV){
@@ -22,12 +23,13 @@ function App() {
 <BrowserRouter>
 <Routes>
 
-<Route path="/" Component={Index} />
+<Route path="/"  Component={Index}/>
 <Route path="/register" Component={Register} />
 <Route path="/login" Component={Login} />
 <Route path="/addsongs" Component={Addsongs} />
 <Route path="/getsongs" Component={Getsongs} />
 <Route path="/playlist" Component={Playlist} />
+
 
 
 

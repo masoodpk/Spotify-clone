@@ -9,7 +9,12 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import './hero.css'
-function Hero() {
+import Playlist from '../playlist';
+
+
+
+
+function Hero({ showPlaylist }) {
   let baseURL = location.href;
   if (import.meta.env.DEV) {
       baseURL = "http://localhost:3007"
@@ -19,6 +24,10 @@ function Hero() {
   const [currentPlayingIndex, setCurrentPlayingIndex] = useState(null);
   const audioRefs = useRef([]);
   const audioRef = useRef(null);
+
+
+
+ 
 
   useEffect(() => {
    
@@ -85,15 +94,20 @@ function Hero() {
     newAudioStates[index] = !isPlaying;
     setAudioStates(newAudioStates);
 };
-
+const handleCreatePlaylist = () => {
+  setShowPlaylist(true);
+};
 
 
   return (
     
-    <div className='container bg-demo mt-[10px] mr-[10px] ml-[370px] h-[100vh]  rounded-md  '>
-        <Header/>
-        <div className="hero-section   bg-gradient-to-b bg-neutral-900 p-3 rounded-md">
 
+    <div className='container bg-demo mt-[10px] mr-[10px] ml-[370px] h-[100vh]  rounded-md  '>
+       {!showPlaylist && <Header />}
+
+
+        <div className="hero-section   bg-gradient-to-b bg-neutral-900 p-3 rounded-md">
+      
          {currentPlayingIndex !== null && (
           <div className="audio-player" style={{ width: '100%',backgroundColor:'black', color: '#black', padding: '10px', position: 'fixed',left:0, bottom: 0, zIndex: 999 }}>
             {/* <audio controls style={{ width: '100%' , color:'#333' }} src={`${baseURL}/api/image/${data[currentPlayingIndex].audio}`} ref={audioRef}/>  */}
@@ -103,6 +117,10 @@ function Hero() {
               <h1 className='font-bold text-[25px] hover:underline duration-100 cursor-pointer'>Spotify Playlist</h1>
               <p className='text-gray-400 font-bold hover:underline duration-100 cursor-pointer mt-[10px]'>Show all</p>
             </div>
+            {showPlaylist ? (
+          <Playlist />
+        ) : (
+          <>
             <div className="hero-card-section flex flex-wrap ">
               {/* <Card/>
               <Card/>
@@ -132,6 +150,9 @@ function Hero() {
           </div>
         </div>
             </div>
+
+            </>
+        )}
 
           <div className="hero-list-socialMeadia mt-[50px] xl:mt-[100px] flex justify-between ">
 
@@ -184,8 +205,16 @@ function Hero() {
           </div>
          </div>
 
+
+         {/* {showPlaylist && <Playlist data={data} baseURL={baseURL} />} */}
+       
         </div>
+          
+
+
+
         </div>
+      
   )
 }
 
@@ -196,3 +225,57 @@ export default Hero
 
 
 
+
+
+
+
+// import React from 'react';
+// import { FaInstagram, FaTwitter, FaFacebook } from "react-icons/fa";
+// import { FaRegCopyright } from "react-icons/fa";
+// import './hero.css';
+// import Header from './Header/Header'
+// function Hero({ showPlaylist, data, audioStates, playAudio, currentPlayingIndex, baseURL }) {
+//   return (
+//     <div className='container bg-demo mt-[10px] mr-[10px] ml-[370px] h-[100vh] rounded-md'>
+//       {!showPlaylist && (
+//         <Header/>
+//       )}
+//       <div className="hero-section bg-gradient-to-b bg-neutral-900 p-3 rounded-md">
+//         {currentPlayingIndex !== null && (
+//           <div className="audio-player" style={{ width: '100%',backgroundColor:'black', color: '#black', padding: '10px', position: 'fixed',left:0, bottom: 0, zIndex: 999 }}>
+//             {/* <audio controls style={{ width: '100%' , color:'#333' }} src={`${baseURL}/api/image/${data[currentPlayingIndex].audio}`} ref={audioRef}/>  */}
+//           </div>
+//         )}
+//         <div className="hero-top flex justify-between px-3 align-middle">
+//           <h1 className='font-bold text-[25px] hover:underline duration-100 cursor-pointer'>Spotify Playlist</h1>
+//           <p className='text-gray-400 font-bold hover:underline duration-100 cursor-pointer mt-[10px]'>Show all</p>
+//         </div>
+//         {!showPlaylist && (
+//           <div className="hero-card-section flex flex-wrap">
+//             <div>
+//               <div className="card-container">
+//                 {data.map((item, index) => (
+//                   <div className="card two" key={index}>
+//                     <div className="card-content">
+//                       <h4 className="title">{item.title}</h4>
+//                       <p className="category">{item.category}</p>
+//                     </div>
+//                     <img src={`${baseURL}/api/image/${item.profile}`} width={"200"} />
+//                     <div className="play-button" onClick={() => playAudio(item.audio, index)}>
+//                       {audioStates[index] ? "❚❚" : "▶"}
+//                     </div> 
+//                     <audio ref={audioRefs.current[index]} src={`${baseURL}/api/image/${item.audio}`} />
+//                   </div>
+//                 ))}
+//               </div>
+//             </div>
+//           </div>
+//         )}
+//         {/* Rest of the hero content */}
+//       </div>
+//       {/* Social media icons and bottom section */}
+//     </div>
+//   );
+// }
+
+// export default Hero;
