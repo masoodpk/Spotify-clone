@@ -18,7 +18,7 @@ function Index() {
     <div className="flex">
     <Sidebar onCreatePlaylist={handleCreatePlaylist} onHomeClick={handleHomeClick}/>
      <Hero showPlaylist={showPlaylist} />
-     {showPlaylist && <Playlist />}
+     {/* {showPlaylist && <Playlist />} */}
     </div>
       {/* <Footer/> */}
     

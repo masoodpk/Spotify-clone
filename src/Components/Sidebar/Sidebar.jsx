@@ -26,15 +26,9 @@ function Sidebar({ onCreatePlaylist,  onHomeClick }) {
  },[])
 
 
- const handleCreatePlaylist = () => {
-  setShowPlaylist(true);
-};
 
-const togglePlaylistPage = () => {
-  setShowPlaylistPage(!showPlaylistPage);
-};
 const handleHomeClick = () => {
-  onHomeClick(); // Call the function passed from the parent component
+  onHomeClick(); 
 };
 
 
