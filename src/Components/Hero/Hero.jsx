@@ -11,10 +11,9 @@ import axios from 'axios'
 import './hero.css'
 import Playlist from '../playlist';
 
+import { FaPlus } from 'react-icons/fa';
 
-
-
-function Hero({ showPlaylist }) {
+function Hero({ showPlaylist,children }) {
   let baseURL = location.href;
   if (import.meta.env.DEV) {
     baseURL = "http://localhost:3007"
@@ -24,10 +23,7 @@ function Hero({ showPlaylist }) {
   const [currentPlayingIndex, setCurrentPlayingIndex] = useState(null);
   const audioRefs = useRef([]);
   const audioRef = useRef(null);
-
-
-
-
+  const [playlist, setPlaylist] = useState([]);
 
   useEffect(() => {
 
@@ -91,8 +87,29 @@ function Hero({ showPlaylist }) {
     newAudioStates[index] = !isPlaying;
     setAudioStates(newAudioStates);
   };
-  const handleCreatePlaylist = () => {
-    setShowPlaylist(true);
+
+
+  const handlePostPlaylist = (item) => {
+    axios.post("/api/playlist", {
+      title: item.title,
+      category: item.category,
+      profile: item.profile,
+      audio:item.audio,
+      
+     },{
+      headers: {
+        "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+  })
+      .then((res) => {
+        console.log("Playlist successfully posted:", res.data);
+   
+      })
+      .catch((error) => {
+        console.error("Error posting playlist:", error);
+        
+      });
   };
 
 
@@ -100,11 +117,12 @@ function Hero({ showPlaylist }) {
 
 
     <div className='container bg-demo mt-[10px] mr-[10px] ml-[370px] h-[100vh]  rounded-md  '>
+     
       {!showPlaylist && <Header />}
 
 
       <div className="hero-section   bg-gradient-to-b bg-neutral-900 p-3 rounded-md">
-
+      {children}
         {currentPlayingIndex !== null && (
           <div className="audio-player" style={{ width: '100%', backgroundColor: 'black', color: '#black', padding: '10px', position: 'fixed', left: 0, bottom: 0, zIndex: 999 }}>
             {/* <audio controls style={{ width: '100%' , color:'#333' }} src={`${baseURL}/api/image/${data[currentPlayingIndex].audio}`} ref={audioRef}/>  */}
@@ -129,6 +147,7 @@ function Hero({ showPlaylist }) {
                 <div className="card-container">
                   {data.map((item, index) => (
                     <div className="card two" key={index}>
+                      <div className="plus-icon-button cursor-pointer"   onClick={() => handlePostPlaylist(item)}><FaPlus /></div>
                       <div className="card-content">
                         <h4 className="title">{item.title}</h4>
                         <p className="category">{item.category}</p>
@@ -138,9 +157,6 @@ function Hero({ showPlaylist }) {
                       <div className="play-button" onClick={() => playAudio(item.audio, index)}>
                         {audioStates[index] ? "❚❚" : "▶"}
                       </div>
-
-
-
                       <audio ref={audioRefs.current[index]} src={`${baseURL}/api/image/${item.audio}`} />
                     </div>
                   ))}

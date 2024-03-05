@@ -10,7 +10,7 @@ const { sign } = jwt;
 export async function register(req, res) {
     try {
       console.log(req.body)
-      let { email, username, password, confirmPassword } = req.body;
+      let { email, username, password, confirmPassword, playlist } = req.body;
       console.log(req.body);
   
       if (!email || !username || !password || !confirmPassword) {
@@ -33,7 +33,7 @@ export async function register(req, res) {
         email,
         password: hashedpass,
         confirmPassword: hashedpass,
-     
+        playlist
         
       });
       console.log(add);
@@ -169,3 +169,25 @@ export async function register(req, res) {
     }
   };
   
+
+  
+  export async function playlist(req, res) {
+    try {
+      let { userId } = req.user;
+      console.log(userId);
+      const { name } = req.body;
+      let user = await loginModel.create({ name, userId});
+      console.log('Playlist created:', playlist);
+      console.log(user);
+      return res.status(201).json({
+        msg: 'Playlist created successfully',
+        user,
+        playlist
+      });
+    } catch (error) {
+       console.error('Error creating playlist:', error);
+      return res.status(500).json({
+        msg: "error occured",
+      });
+    }
+  }

@@ -7,16 +7,17 @@ import Playlist from './Components/playlist'
 function Index() {
   const [showPlaylist, setShowPlaylist] = useState(false);
 
-  const handleCreatePlaylist = () => {
+
+  const handleLibraryClick = () => {
     setShowPlaylist(true);
   };
   const handleHomeClick = () => {
-    setShowPlaylist(false); // Set showPlaylist to false when Home is clicked
+    setShowPlaylist(false); 
   };
   return (
     <div className='Container '>
     <div className="flex">
-    <Sidebar onCreatePlaylist={handleCreatePlaylist} onHomeClick={handleHomeClick}/>
+    <Sidebar onLibraryClick={handleLibraryClick}  onHomeClick={handleHomeClick}/>
      <Hero showPlaylist={showPlaylist} />
      {/* {showPlaylist && <Playlist />} */}
     </div>
@@ -29,3 +30,4 @@ function Index() {
 }
 
 export default Index
+

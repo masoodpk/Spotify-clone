@@ -15,6 +15,9 @@ confirmPassword:{
 },
 profile:{
     type:String
+},
+playlist:{type:Array
+    
 }
 
 

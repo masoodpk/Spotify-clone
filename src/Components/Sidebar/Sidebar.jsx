@@ -9,10 +9,14 @@ import { SlSocialSpotify } from "react-icons/sl";
 import { LuPlus } from "react-icons/lu";
 import spIcon from '../../assets/Spotify.svg'
 import { Link } from 'react-router-dom';
-function Sidebar({ onCreatePlaylist,  onHomeClick }) {
+import axios from 'axios';
+import './sidebar.css'
+function Sidebar({  onLibraryClick , onHomeClick }) {
 
  const [scrolling ,setScrolling] = useState(false)
  const [showPlaylistPage, setShowPlaylistPage] = useState(false);
+ const [showPopup, setShowPopup] = useState(false);
+ const [playlistName, setPlaylistName] = useState("");
  useEffect(()=>{
   const handleScroll=()=>{
     if(window.screenY >50){
@@ -32,6 +36,53 @@ const handleHomeClick = () => {
 };
 
 
+const handleCreatePlaylist = () => {
+  setShowPopup(true);
+};
+
+const handleClosePopup = () => {
+  setShowPopup(false);
+  setPlaylistName(''); 
+};
+
+const handlePlaylistNameChange = (event) => {
+  setPlaylistName(event.target.value);
+};
+
+const handleCreateButtonClick = () => {
+  
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("Token not found in local storage");
+    return;
+  }
+
+  axios.post('/api/playlist', { name: playlistName },{
+    
+    headers: {
+      "Content-Type": "multipart/form-data",
+    
+      Authorization: `Bearer ${token}`
+      
+    }
+  })
+  .then(response => {
+    console.log('Playlist created:', response.data);
+    setShowPopup(false);
+    setPlaylistName('');
+
+  })
+  .catch(error => {
+    console.error('Error creating playlist:', error);
+  });
+
+  console.log('Creating playlist:', playlistName);
+  setShowPopup(false);
+  setPlaylistName('');
+};
+
+
+
  const header =`flex p-3 justify-between ${scrolling && 'shadow-black shadow-md'}`
 
   return (
@@ -41,7 +92,7 @@ const handleHomeClick = () => {
          <ul className='text-white flex flex-col '>
           
            <li className='flex font-bold '> <span className='mr-[2px] '><BsSpotify size={23}/></span>Spotify</li>
-            <li className='flex mt-[25px] font-bold ' onClick={handleHomeClick}> <span className=' mr-[15px] mt-[-5px]'><GoHomeFill size={30}/></span>Home</li>
+            <li className='flex mt-[25px] font-bold cursor-pointer ' onClick={handleHomeClick}> <span className=' mr-[15px] mt-[-5px]' onClick={handleHomeClick}><GoHomeFill size={30}/></span>Home</li>
           
 
 
@@ -60,13 +111,13 @@ const handleHomeClick = () => {
 
               <div className="sidebar-header-left flex text-gray-400  cursor-pointer hover:text-white duration-150">
 
-              <span className='mr-[10px] '><LuLibrary size={25} /></span><h1 className='text-[18px] font-medium  '>Your Library</h1>
+              <span className='mr-[10px] '    onClick={onLibraryClick}><LuLibrary size={25} /></span><h1 className='text-[18px] font-medium ' onClick={onLibraryClick}>Your Library</h1>
               </div>
-            
+              {/* onClick={onCreatePlaylist} */}
 
-              <div  className="sidebar-header-right hover:bg-black duration-75 rounded-full p-1 cursor-pointer text-gray-400">
+              {/* <div  className="sidebar-header-right hover:bg-black duration-75 rounded-full p-1 cursor-pointer text-gray-400">
                 <LuPlus size={25} />
-              </div>
+              </div> */}
             </div>
 
             <div className="sidebar-midile h-[200px] overflow-y-scroll   p-3">
@@ -77,15 +128,7 @@ const handleHomeClick = () => {
               <div className="midle-tile-1  bg-bgclr h-[150px] rounded-lg mt-[10px] py-[15px] px-[20px]">
                   <h1 className='font-medium text-[18px]'>Create your first playlist</h1>
                   <p className='font-medium'>its easy,we will help you</p>
-                  <button onClick={onCreatePlaylist}  className='py-2 px-3 bg-white text-black rounded-3xl mt-[25px] font-bold hover:scale-105 duration-100 text-[14px]'>Create playlist</button>
-{/*           
-             <Link to="/playlist">
-            <button className='py-2 px-3 bg-white text-black rounded-3xl mt-[25px] font-bold hover:scale-105 duration-100 text-[14px]'>
-              Create playlist
-            </button>
-          </Link> */}
-          
-          
+                  <button  className='py-2 px-3 bg-white text-black rounded-3xl mt-[25px] font-bold hover:scale-105 duration-100 text-[14px]'    onClick={handleCreatePlaylist}>Create playlist</button>
           
               </div>
               <div className="midle-tile-2 bg-bgclr h-[150px] rounded-xl mt-[20px] py-[15px] px-[20px]">
@@ -120,9 +163,27 @@ const handleHomeClick = () => {
                      <button className='mt-[30px] flex rounded-full border border-gray-400 px-4 hover:scale-105 duration-100  text-white hover:border-white font-medium py-1'> <span className='mt-[3px] mr-[5px] text-white'><PiGlobeSimpleBold size={20}/></span> English</button>
                       </div>
         </div>
-          
-
-
+      
+      
+        {showPopup && (
+        // <div className='popup'>
+        <div className={`popup ${showPopup ? 'open' : ''}`}>
+          <div className='popup-content'>
+            <span className='close' onClick={handleClosePopup}>
+              &times;
+            </span>
+            <h2>Create Playlist</h2>
+            <input
+              type='text'
+              placeholder='Enter playlist name'
+              value={playlistName}
+              onChange={handlePlaylistNameChange}
+            />
+            <button  onClick={handleCreateButtonClick}>Create</button>
+          </div>
+        </div>
+      )}
+     
     </div>
   )
 }

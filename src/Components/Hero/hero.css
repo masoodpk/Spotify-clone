@@ -1,7 +1,11 @@
+
+
+
 .card-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+
   }
   
   .card {
@@ -12,6 +16,7 @@
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
+   
   }
   
   .card:hover {
@@ -24,6 +29,7 @@
     object-fit: cover;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    
   }
   
   .card-content {
@@ -35,6 +41,7 @@
     padding: 10px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    text-align: center;
   }
   
   .card h4, .card p {
@@ -82,15 +89,7 @@
     color: #888; 
     font-weight: bold;
 }
-/* .audio-player {
-  width: 100%;
-  background-color: white;
-  color: black; 
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
-  z-index: 999;
-} */
+
 
 .music-player {
   position: fixed;
@@ -100,4 +99,12 @@
   z-index: 999;
   color:#333;
 
+}
+.plus-icon-button {
+  position: absolute;
+  bottom: 15px;
+  left: 10px;
+  color: #14a800;
+  font-size: 24px;
+  cursor: pointer;
 }

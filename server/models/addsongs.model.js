@@ -13,12 +13,12 @@ const schema = new mongoose.Schema({
     category: {
         type: String
     },
-   image:{
-    type:String
-   },
-   audio:{
-    type:String
-   }
+    image: {
+        type: String
+    },
+    audio: {
+        type: String
+    }
 });
 
 export default mongoose.model.Addsongs || mongoose.model("Addsongs", schema);
