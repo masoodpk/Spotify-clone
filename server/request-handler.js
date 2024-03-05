@@ -179,7 +179,7 @@ export async function register(req, res) {
 
       let user = await loginModel.create({ playlist, userId});
       console.log('Playlist created:', playlist);
-      console.log(user);
+     
       return res.status(201).json({
         msg: 'Playlist created successfully',
         user,
