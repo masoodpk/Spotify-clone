@@ -27,5 +27,5 @@ router.route("/image/:name").get(rh.image);
 router.route("/addsongs").post(auth, uploader.fields([{ name: "image" }, { name: "audio" }]), rh.addsongs);
 router.route("/getsongs").get(auth, rh.getsongs);
 router.route("/hero").get(rh.hero);
-router.route("/playlist").post(auth,rh.playlist)
+router.route("/addplaylist").post(auth,rh.addplaylist)
 export default router;

@@ -57,12 +57,12 @@ const handleCreateButtonClick = () => {
     return;
   }
 
-  axios.post('/api/playlist', { name: playlistName },{
+  axios.post('/api/addplaylist', { name: playlistName },{
     
     headers: {
       "Content-Type": "multipart/form-data",
     
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${localStorage.getItem("token")}`
       
     }
   })
@@ -176,6 +176,7 @@ const handleCreateButtonClick = () => {
             <input
               type='text'
               placeholder='Enter playlist name'
+              name='playlist'
               value={playlistName}
               onChange={handlePlaylistNameChange}
             />

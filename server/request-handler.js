@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 import loginModel from "./models/login.model.js";
 import addsongsModel from "./models/addsongs.model.js";
-
+import playlistModel from "./models/playlist.model.js";
 import path from "path";
 const { sign } = jwt;
 
@@ -171,12 +171,13 @@ export async function register(req, res) {
   
 
   
-  export async function playlist(req, res) {
+  export async function addplaylist(req, res) {
     try {
       let { userId } = req.user;
       console.log(userId);
-      const { name } = req.body;
-      let user = await loginModel.create({ name, userId});
+      const { playlist} = req.body;
+
+      let user = await loginModel.create({ playlist, userId});
       console.log('Playlist created:', playlist);
       console.log(user);
       return res.status(201).json({
