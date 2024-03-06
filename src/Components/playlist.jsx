@@ -14,7 +14,7 @@ function Playlist() {
         const response = await axios.get('/api/getplaylist', {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem("token")}`
+            Authorization: `Bearer ${token}`
           },
         });
         if (response.status === 200) {
