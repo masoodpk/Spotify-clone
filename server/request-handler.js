@@ -195,3 +195,24 @@ export async function register(req, res) {
   }
 
 
+  export async function getplaylist(req, res) {
+    try {
+  
+   let {userId} = req.user
+   const { name} = req.body;
+      const user = await loginModel.find({ userId,  playlists: name});
+      console.log(user);
+      return res.status(200).json({
+        msg: "Files retrieved successfully",
+        user
+      });
+  
+      //  
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        msg: "Error occurred while retrieving files",
+      });
+    }
+  };
+  
