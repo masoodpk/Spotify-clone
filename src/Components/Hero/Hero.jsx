@@ -90,7 +90,7 @@ function Hero({ showPlaylist,children }) {
 
 
   const handlePostPlaylist = (item) => {
-    axios.post("/api/playlist", {
+    axios.post("/api/addaudio", {
       title: item.title,
       category: item.category,
       profile: item.profile,

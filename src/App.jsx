@@ -9,6 +9,8 @@ import Login from './pages/login';
 import Addsongs from './pages/addsongs'
 import Getsongs from './pages/getsongs'
 import Playlist from './Components/playlist'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   axios.defaults.baseURL=location.href;

@@ -25,10 +25,10 @@ export async function register(req, res) {
           msg: "user already exist"
         })
       }
-      let { filename } = req.file;
+      // let { filename } = req.file;
       let hashedpass = await bcrypt.hash(password, 4)
       let add = loginModel.create({
-        profile: filename,
+        // profile: filename,
         username,
         email,
         password: hashedpass,
@@ -175,15 +175,16 @@ export async function register(req, res) {
     try {
       let { userId } = req.user;
       console.log(userId);
-      const { playlist} = req.body;
+      const { name} = req.body;
+      console.log('Received playlist name:', name);
 
-      let user = await loginModel.create({ playlist, userId});
-      console.log('Playlist created:', playlist);
+      let user = await loginModel.create({  playlists: name,  userId});
+      console.log('Playlist created:', name);
      
       return res.status(201).json({
         msg: 'Playlist created successfully',
         user,
-        playlist
+        playlists: name
       });
     } catch (error) {
        console.error('Error creating playlist:', error);
@@ -192,3 +193,5 @@ export async function register(req, res) {
       });
     }
   }
+
+

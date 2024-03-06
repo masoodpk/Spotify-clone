@@ -11,12 +11,15 @@ import spIcon from '../../assets/Spotify.svg'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './sidebar.css'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function Sidebar({  onLibraryClick , onHomeClick }) {
 
  const [scrolling ,setScrolling] = useState(false)
  const [showPlaylistPage, setShowPlaylistPage] = useState(false);
  const [showPopup, setShowPopup] = useState(false);
- const [playlistName, setPlaylistName] = useState("");
+ const [playlistName, setPlaylistName] = useState('');
  useEffect(()=>{
   const handleScroll=()=>{
     if(window.screenY >50){
@@ -57,10 +60,11 @@ const handleCreateButtonClick = () => {
     return;
   }
 
-  axios.post('/api/addplaylist', { name: playlistName },{
+
+  axios.post('/api/addplaylist', {   name: playlistName },{
     
     headers: {
-      "Content-Type": "multipart/form-data",
+      "Content-Type": "application/JSON",
     
       Authorization: `Bearer ${localStorage.getItem("token")}`
       
@@ -70,10 +74,17 @@ const handleCreateButtonClick = () => {
     console.log('Playlist created:', response.data);
     setShowPopup(false);
     setPlaylistName('');
-
+    toast.success('Playlist created successfully', { autoClose: 1000 });
   })
   .catch(error => {
     console.error('Error creating playlist:', error);
+    if (error.response) {
+      console.log('Server Error:', error.response.data);
+      toast.error('Error creating playlist');
+    } else {
+      console.log('Client Error:', error.message);
+      toast.error('Error creating playlist');
+    }
   });
 
   console.log('Creating playlist:', playlistName);

@@ -32,7 +32,7 @@ function Register() {
                 formData.append("email", values.email);
                 formData.append("password", values.password);
                 formData.append("confirmPassword", values.confirmPassword);
-                formData.append("file", document.querySelector("#file").files[0]);  
+                // formData.append("file", document.querySelector("#file").files[0]);  
 
                 let res = await axios.post("/api/register", formData, {
                     headers: {
@@ -77,7 +77,7 @@ function Register() {
                                     <input {...formik.getFieldProps("confirmPassword")} type="password" className="form-control five" id="confirmPassword" placeholder="Confirm Password" />
                                     {formik.errors.confirmPassword ? <div className="error">{formik.errors.confirmPassword}</div> : null}
                                 </div>
-         <input type="file"  name="file" id="file" placeholder="file"/>
+         {/* <input type="file"  name="file" id="file" placeholder="file"/> */}
                                 <input type="submit" className="btn btn-primary two btn-block" value="Sign Up" />
                             </form>
                             <p className="mt-3 text-center">Already have an account? <Link className="link" to={"/login"}>Log In</Link></p>
