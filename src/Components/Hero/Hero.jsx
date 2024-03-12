@@ -23,7 +23,8 @@ function Hero({ showPlaylist,children }) {
   const [currentPlayingIndex, setCurrentPlayingIndex] = useState(null);
   const audioRefs = useRef([]);
   const audioRef = useRef(null);
-  const [playlist, setPlaylist] = useState([]);
+  const [showPlaylistDropdown, setShowPlaylistDropdown] = useState(false);
+  const [playlists, setPlaylists] = useState([]);
 
   useEffect(() => {
 
@@ -82,34 +83,19 @@ function Hero({ showPlaylist,children }) {
       });
 
     }
-
     const newAudioStates = new Array(audioStates.length).fill(false);
     newAudioStates[index] = !isPlaying;
     setAudioStates(newAudioStates);
   };
 
-
-  const handlePostPlaylist = (item) => {
-    axios.post("/api/addaudio", {
-      title: item.title,
-      category: item.category,
-      profile: item.profile,
-      audio:item.audio,
-      
-     },{
-      headers: {
-        "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-  })
-      .then((res) => {
-        console.log("Playlist successfully posted:", res.data);
-   
-      })
-      .catch((error) => {
-        console.error("Error posting playlist:", error);
-        
-      });
+  const fetchPlaylists = async () => {
+    try {
+      const response = await axios.get('/api/listplaylist');
+      setPlaylists(response.data.playlists); // Assuming the response contains an array of playlists
+      setShowPlaylistDropdown(true);
+    } catch (error) {
+      console.error('Error fetching playlists:', error);
+    }
   };
 
 
@@ -130,7 +116,7 @@ function Hero({ showPlaylist,children }) {
         )}
         <div className="hero-top flex justify-between px-3  align-middle">
           <h1 className='font-bold text-[25px] hover:underline duration-100 cursor-pointer'>Spotify Playlist</h1>
-          <p className='text-gray-400 font-bold hover:underline duration-100 cursor-pointer mt-[10px]'>Show all</p>
+          <p className='text-gray-400 font-bold hover:underline duration-100 cursor-pointer mt-[10px]' >Show all</p>
         </div>
         {showPlaylist ? (
           <Playlist />
@@ -147,7 +133,7 @@ function Hero({ showPlaylist,children }) {
                 <div className="card-container">
                   {data.map((item, index) => (
                     <div className="card two" key={index}>
-                      <div className="plus-icon-button cursor-pointer"   onClick={() => handlePostPlaylist(item)}><FaPlus /></div>
+                      <div className="plus-icon-button cursor-pointer" onClick={fetchPlaylists}><FaPlus /></div>
                       <div className="card-content">
                         <h4 className="title">{item.title}</h4>
                         <p className="category">{item.category}</p>
@@ -166,6 +152,20 @@ function Hero({ showPlaylist,children }) {
 
           </>
         )}
+
+
+{showPlaylistDropdown && (
+          <div className="playlist-dropdown">
+            <ul>
+              {playlists.map((playlist, index) => (
+                <li key={index} onClick={() => handlePlaylistSelection(playlist)}>{playlist.name}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+
+
 
         <div className="hero-list-socialMeadia mt-[50px] xl:mt-[100px] flex justify-between ">
 
@@ -222,7 +222,6 @@ function Hero({ showPlaylist,children }) {
         {/* {showPlaylist && <Playlist data={data} baseURL={baseURL} />} */}
 
       </div>
-
 
 
 

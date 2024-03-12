@@ -13,9 +13,6 @@ const schema = new mongoose.Schema({
     category: {
         type: String
     },
-    image: {
-        type: String
-    },
     audio: {
         type: String
     }

@@ -11,6 +11,7 @@ function Playlist() {
   useEffect(() => {
     async function getPlaylist() {
       try {
+        const token = localStorage.getItem('token');
         const response = await axios.get('/api/getplaylist', {
           headers: {
             'Content-Type': 'application/json',
@@ -34,12 +35,15 @@ function Playlist() {
     <div>
 
 <h1 className='heading'>Your Playlist</h1>
-<ul>
+ <div className="playlist-cards">
         {playlist.map(item => (
-          <li key={item._id}>{item.name}</li> 
-        ))}
-      </ul>
+          <div key={item._id} className="playlist-card">
+            <h3>{item.name}</h3>
+           
 
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

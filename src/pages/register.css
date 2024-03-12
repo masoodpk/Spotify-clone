@@ -6,7 +6,7 @@ body {
 .signup-box.three {
     background-color: #111111;
     color: #fff;
-    padding: 20px;
+    padding: 28px;
     border-radius: 8px;
 
 }
@@ -34,6 +34,7 @@ body {
 .formBox.four {
     width: 100%;
     max-width: 400px;
+    margin-left: 40px;
 }
 
 
@@ -58,13 +59,14 @@ body {
 
     border-radius: 4px;
     padding: 10px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     width: 320px;
  justify-content: center;
  align-items: center;
  display: flex;
 }
 .text-center.three{
+    margin-left: 30px;
     font-size: 50px;
     font-family: var(--font-family, CircularSpTitle, CircularSpTitle-Tall, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif));;
 }
