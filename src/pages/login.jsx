@@ -1,6 +1,6 @@
 
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom'
 import './login.css'
 
@@ -11,6 +11,32 @@ import Spotify from "../assets/Spotify.svg"
 function Login() {
     const [state, setState] = useState(null);
     const navigate = useNavigate()
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            // Fetch user information using token if available
+            fetchUserInfo(token);
+        }
+    }, []);
+
+    const fetchUserInfo = async (token) => {
+        try {
+            const response = await axios.get("/api/userinfo", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setUser(response.data.user);
+            navigate("/", { replace: true }); // Redirect to home page
+        } catch (error) {
+            console.error("Error fetching user information:", error);
+            // Handle error or redirect to login page
+        }
+    };
+
+
+
 
     const formik = useFormik({
         initialValues: {
@@ -28,7 +54,7 @@ function Login() {
                     toast.success(res.data.msg);
             
                     localStorage.setItem("token", res.data.token);
-               
+                    fetchUserInfo(res.data.token);
                     navigate("/", { replace: true });
                 }
             }
