@@ -15,7 +15,6 @@ function Login() {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            // Fetch user information using token if available
             fetchUserInfo(token);
         }
     }, []);
@@ -28,10 +27,10 @@ function Login() {
                 }
             });
             setUser(response.data.user);
-            navigate("/", { replace: true }); // Redirect to home page
+            navigate("/", { replace: true }); 
         } catch (error) {
             console.error("Error fetching user information:", error);
-            // Handle error or redirect to login page
+    
         }
     };
 

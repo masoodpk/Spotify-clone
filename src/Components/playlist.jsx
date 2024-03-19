@@ -1,26 +1,22 @@
-
 import React, { useState, useEffect } from 'react';
-import './playlist.css'
-
+import './playlist.css';
 import axios from 'axios';
 
 function Playlist() {
-
-  const [playlist, setPlaylist] = useState([]);
+  const [playlists, setPlaylists] = useState([]);
 
   useEffect(() => {
-    async function getPlaylist() {
+    async function fetchPlaylists() {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('/api/getplaylist', {
+        const response = await axios.get('/api/showPlayList', {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`
           },
         });
         if (response.status === 200) {
-          setPlaylist(response.data.user); 
-        } else {
+          setPlaylists(response.data.playList);        } else {
           console.error('Failed to fetch playlist');
         }
       } catch (error) {
@@ -28,24 +24,22 @@ function Playlist() {
       }
     }
 
-    getPlaylist();
+    fetchPlaylists();
   }, []); 
 
   return (
     <div>
-
-<h1 className='heading'>Your Playlist</h1>
- <div className="playlist-cards">
-        {playlist.map(item => (
-          <div key={item._id} className="playlist-card">
-            <h3>{item.name}</h3>
-           
-
-          </div>
-        ))}
+      <h1 className='heading'>Your Playlist</h1>
+      <div className="playlist-cards">
+        {console.log(playlists)}
+        {playlists.length > 0 && (
+          playlists.map((playlist, index) => (
+            <h1 key={index}>{playlist.playListName}</h1>
+          ))
+        )}
       </div>
     </div>
-  )
+  );
 }
 
-export default Playlist
+export default Playlist;

@@ -15,8 +15,7 @@ confirmPassword:{
 },
 profile:{
     type:String
-},
-playlists:{type:Array}
+}
 });
 
 export default mongoose.model.Logins || mongoose.model("Login",schema);

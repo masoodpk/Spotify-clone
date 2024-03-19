@@ -10,7 +10,7 @@ const { sign } = jwt;
 export async function register(req, res) {
     try {
       console.log(req.body)
-      let { email, username, password, confirmPassword, playlist } = req.body;
+      let { email, username, password, confirmPassword } = req.body;
       console.log(req.body);
   
       if (!email || !username || !password || !confirmPassword) {
@@ -33,7 +33,6 @@ export async function register(req, res) {
         email,
         password: hashedpass,
         confirmPassword: hashedpass,
-        playlist
         
       });
       console.log(add);
@@ -174,11 +173,11 @@ export async function register(req, res) {
   export async function addplaylist(req, res) {
     try {
       let { userId } = req.user;
-      console.log(userId);
+      console.log(req);
       const { name} = req.body;
       console.log('Received playlist name:', name);
 
-      let user = await loginModel.create({  playlists: name,  userId});
+      let user = await playlistModel.create({  playListName: name,  userId});
       console.log('Playlist created:', name);
      
       return res.status(201).json({
@@ -216,7 +215,22 @@ export async function register(req, res) {
   //   }
   // };
   
+export async function showPlayList(req,res){
+  try{
+   
+    const {userId} =req.user
+    console.log(userId)
 
+    const playList = await playlistModel.find({ userId: userId })
+    console.log(playList)
+    return res.status(200).json({
+      msg: "Files retrieved successfully",playList
+    });
+
+  }catch(error){
+console.log(error)
+  }
+}
 
 
   export async function getplaylist(req, res) {
@@ -244,17 +258,14 @@ export async function register(req, res) {
 
 
 export async function listplaylist (req, res) {
-  try {
- 
-    const userId = req.user.id; 
-    const user = await loginModel.findById(userId);
+  try { 
+    const {userId} =req.user
+    console.log("f",userId)
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    const playlists = user.playlists;
+    const playList = await playlistModel.find({ userId: userId })
+    
 
-    res.status(200).json(playlists);
+    res.status(200).json(playList);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server Error' });

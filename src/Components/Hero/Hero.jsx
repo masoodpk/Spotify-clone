@@ -90,8 +90,16 @@ function Hero({ showPlaylist,children }) {
 
   const fetchPlaylists = async () => {
     try {
-      const response = await axios.get('/api/listplaylist');
-      setPlaylists(response.data.playlists); // Assuming the response contains an array of playlists
+      const token = localStorage.getItem('token');
+      const response = await axios.get('/api/listplaylist',{
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      });
+      setPlaylists(response.data);
+      console.log(response.data); // Assuming the response contains an array of playlists
+       // Assuming the response contains an array of playlists
       setShowPlaylistDropdown(true);
     } catch (error) {
       console.error('Error fetching playlists:', error);
@@ -154,7 +162,7 @@ function Hero({ showPlaylist,children }) {
         )}
 
 
-{showPlaylistDropdown && (
+{/* {showPlaylistDropdown && (
           <div className="playlist-dropdown">
             <ul>
               {playlists.map((playlist, index) => (
@@ -162,7 +170,7 @@ function Hero({ showPlaylist,children }) {
               ))}
             </ul>
           </div>
-        )}
+        )} */}
 
 
 

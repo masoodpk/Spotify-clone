@@ -30,5 +30,5 @@ router.route("/hero").get(rh.hero);
 router.route("/addplaylist").post(auth,rh.addplaylist)
 // router.route("/addaudio").post(auth,rh.addaudio)
 router.route("/listplaylist").get(auth,rh.listplaylist)
-router.route("/getplaylist").get(auth,rh.getplaylist)
+router.route("/showPlayList").get(auth,rh.showPlayList)
 export default router;

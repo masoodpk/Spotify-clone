@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
-                             
-const schema = new mongoose.Schema({
-    userId: { type: String },
-    audio: { type: String },
-    playlists: { type: String },
+
+
+const playlistSchema = new mongoose.Schema({
+    playListName: String,
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "Login" },
+    audio: [{ type: mongoose.Schema.Types.ObjectId, ref: "Addsongs" }]
 });
 
-export default mongoose.model.Playlists || mongoose.model("Playlist", schema);
+export default mongoose.model("Playlist", playlistSchema);
