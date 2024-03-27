@@ -274,6 +274,12 @@ function Hero({ showPlaylist,children }) {
   const audioRef = useRef(null);
   const [showPlaylistDropdown, setShowPlaylistDropdown] = useState(false);
   const [playlists, setPlaylists] = useState([]);
+  const [playlistData, setPlaylistData] = useState([]);
+
+
+  const togglePlaylistDropdown = () => {
+    setShowPlaylistDropdown(prevState => !prevState);
+  };
 
   console.log('imaplaylist',playlists)
 
@@ -377,6 +383,7 @@ const handlePlaylistSelection = async () => {
         },
       });
       setPlaylists({ songId: songId, data: response.data });
+      togglePlaylistDropdown(); 
       console.log(response.data); // Assuming the response contains an array of playlists
        // Assuming the response contains an array of playlists
       setShowPlaylistDropdown((prevShowPlaylistDropDown)=>prevShowPlaylistDropDown=true);
@@ -401,6 +408,21 @@ const handlePlaylistSelection = async () => {
             {/* <audio controls style={{ width: '100%' , color:'#333' }} src={`${baseURL}/api/image/${data[currentPlayingIndex].audio}`} ref={audioRef}/>  */}
           </div>
         )}
+
+{showPlaylistDropdown && (
+          <div className="playlist-dropdown">
+            <ul>
+              {playlistData.map((playlist, index) => (
+                <li key={index} onClick={() => handlePlaylistSelection(playlist)}>
+                  {playlist.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+
+
         <div className="hero-top flex justify-between px-3  align-middle">
           <h1 className='font-bold text-[25px] hover:underline duration-100 cursor-pointer'>Spotify Playlist</h1>
           <p className='text-gray-400 font-bold hover:underline duration-100 cursor-pointer mt-[10px]' >Show all</p>
