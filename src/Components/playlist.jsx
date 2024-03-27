@@ -4,6 +4,7 @@ import axios from 'axios';
 
 function Playlist() {
   const [playlists, setPlaylists] = useState([]);
+  const [showPlaylistDropdown, setShowPlaylistDropdown] = useState(false);
 
   useEffect(() => {
     async function fetchPlaylists() {
@@ -27,16 +28,47 @@ function Playlist() {
     fetchPlaylists();
   }, []); 
 
+  
+  const togglePlaylistDropdown = () => {
+    setShowPlaylistDropdown(prevState => !prevState);
+  };
+  const handlePlaylistItemClick = () => {
+    setShowPlaylistDropdown(false);
+  };
+
   return (
     <div>
       <h1 className='heading'>Your Playlist</h1>
       <div className="playlist-cards">
-        {console.log(playlists)}
+        {/* {console.log(playlists)}
         {playlists.length > 0 && (
           playlists.map((playlist, index) => (
             <h1 key={index}>{playlist.playListName}</h1>
           ))
+        )} */}
+
+<button className="toggle-playlist-btn" onClick={togglePlaylistDropdown}>
+          Show Playlists
+        </button>
+
+        {/* Playlist dropdown */}
+        {showPlaylistDropdown && (
+          <div className="playlist-dropdown">
+            <ul>
+              {playlists.map((playlist, index) => (
+                <li key={index} onClick={handlePlaylistItemClick}>
+                  {playlist.playListName}
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
+
+
+
+
+
+
       </div>
     </div>
   );
